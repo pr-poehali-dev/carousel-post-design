@@ -122,11 +122,11 @@ const Index = () => {
     switch (slide.type) {
       case 'intro':
         return (
-          <div className="h-full flex flex-col justify-center items-center text-center px-12 py-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-foreground">
+          <div className="h-full flex flex-col justify-center items-center text-center px-10 py-12">
+            <h1 className="text-2xl md:text-3xl font-bold mb-4 leading-tight text-foreground">
               {slide.title}
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+            <p className="text-sm text-muted-foreground max-w-xl leading-relaxed">
               {slide.subtitle}
             </p>
           </div>
@@ -134,27 +134,27 @@ const Index = () => {
 
       case 'text':
         return (
-          <div className="h-full flex flex-col justify-center px-12 py-16 space-y-8">
-            <h2 className="text-3xl font-bold text-foreground">{slide.title}</h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">{slide.content}</p>
+          <div className="h-full flex flex-col justify-center px-10 py-12 space-y-5">
+            <h2 className="text-xl font-bold text-foreground">{slide.title}</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{slide.content}</p>
             {slide.stats && (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {slide.stats.map((stat, i) => (
-                  <div key={i} className="flex justify-between items-center border-l-4 border-primary pl-6 py-2">
-                    <span className="text-base text-foreground font-medium">{stat.label}</span>
-                    <span className="text-xl font-mono font-semibold text-primary">{stat.value}</span>
+                  <div key={i} className="flex justify-between items-center border-l-2 border-primary pl-4 py-1">
+                    <span className="text-xs text-foreground font-medium">{stat.label}</span>
+                    <span className="text-sm font-mono font-semibold text-primary">{stat.value}</span>
                   </div>
                 ))}
               </div>
             )}
             {slide.additional && (
-              <p className="text-sm text-muted-foreground leading-relaxed pt-4 border-t">
+              <p className="text-xs text-muted-foreground leading-relaxed pt-3 border-t">
                 {slide.additional}
               </p>
             )}
             {slide.highlight && (
-              <div className="bg-primary/5 border-l-4 border-primary px-6 py-4 rounded-r">
-                <p className="text-base text-foreground font-medium">{slide.highlight}</p>
+              <div className="bg-primary/5 border-l-2 border-primary px-4 py-3 rounded-r">
+                <p className="text-xs text-foreground font-medium">{slide.highlight}</p>
               </div>
             )}
           </div>
@@ -163,19 +163,19 @@ const Index = () => {
       case 'bar-chart':
         const maxValue = Math.max(...(slide.data?.map((d) => d.value) || [0]));
         return (
-          <div className="h-full flex flex-col justify-center px-12 py-16 space-y-8">
+          <div className="h-full flex flex-col justify-center px-10 py-12 space-y-5">
             <div>
-              <h2 className="text-3xl font-bold text-foreground mb-2">{slide.title}</h2>
-              <p className="text-sm text-muted-foreground">{slide.subtitle}</p>
+              <h2 className="text-xl font-bold text-foreground mb-1">{slide.title}</h2>
+              <p className="text-xs text-muted-foreground">{slide.subtitle}</p>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-4">
               {slide.data?.map((item, i) => (
-                <div key={i} className="space-y-2">
+                <div key={i} className="space-y-1.5">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm font-medium text-foreground">{item.region}</span>
-                    <span className="text-lg font-mono font-semibold text-primary">{item.value} млн</span>
+                    <span className="text-xs font-medium text-foreground">{item.region}</span>
+                    <span className="text-sm font-mono font-semibold text-primary">{item.value} млн</span>
                   </div>
-                  <div className="w-full bg-secondary rounded-full h-3 overflow-hidden">
+                  <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
                     <div
                       className="bg-primary h-full rounded-full transition-all duration-500"
                       style={{ width: `${(item.value / maxValue) * 100}%` }}
@@ -192,14 +192,14 @@ const Index = () => {
         let cumulativePercentage = 0;
         
         return (
-          <div className="h-full flex flex-col justify-center items-center px-12 py-16 space-y-6">
+          <div className="h-full flex flex-col justify-center items-center px-10 py-12 space-y-4">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-foreground mb-2">{slide.title}</h2>
+              <h2 className="text-xl font-bold text-foreground mb-1">{slide.title}</h2>
               <p className="text-xs text-muted-foreground">{slide.subtitle}</p>
             </div>
             
-            <div className="flex items-center gap-8">
-              <svg width="240" height="240" viewBox="0 0 240 240" className="flex-shrink-0">
+            <div className="flex items-center gap-6">
+              <svg width="200" height="200" viewBox="0 0 240 240" className="flex-shrink-0">
                 {slide.data?.map((item, i) => {
                   const percentage = (item.value / total) * 100;
                   const startAngle = (cumulativePercentage / 100) * 360 - 90;
@@ -259,26 +259,26 @@ const Index = () => {
       case 'bar-chart-horizontal':
         const maxPrice = Math.max(...(slide.data?.map((d) => d.value) || [0]));
         return (
-          <div className="h-full flex flex-col justify-center px-12 py-16 space-y-8">
+          <div className="h-full flex flex-col justify-center px-10 py-12 space-y-5">
             <div>
-              <h2 className="text-3xl font-bold text-foreground mb-2">{slide.title}</h2>
-              <p className="text-sm text-muted-foreground mb-4">{slide.subtitle}</p>
+              <h2 className="text-xl font-bold text-foreground mb-1">{slide.title}</h2>
+              <p className="text-xs text-muted-foreground mb-3">{slide.subtitle}</p>
               {slide.note && (
-                <p className="text-sm text-foreground bg-primary/5 px-4 py-3 rounded border-l-4 border-primary">
+                <p className="text-xs text-foreground bg-primary/5 px-3 py-2 rounded border-l-2 border-primary">
                   {slide.note}
                 </p>
               )}
             </div>
-            <div className="space-y-5">
+            <div className="space-y-3">
               {slide.data?.map((item, i) => (
-                <div key={i} className="space-y-2">
+                <div key={i} className="space-y-1.5">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm font-medium text-foreground">{item.city}</span>
-                    <span className="text-lg font-mono font-semibold text-primary">
+                    <span className="text-xs font-medium text-foreground">{item.city}</span>
+                    <span className="text-sm font-mono font-semibold text-primary">
                       {item.value.toLocaleString('ru-RU')} ₽
                     </span>
                   </div>
-                  <div className="w-full bg-secondary rounded-full h-3 overflow-hidden">
+                  <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
                     <div
                       className="bg-primary h-full rounded-full transition-all duration-500"
                       style={{ width: `${(item.value / maxPrice) * 100}%` }}
@@ -292,15 +292,15 @@ const Index = () => {
 
       case 'conclusion':
         return (
-          <div className="h-full flex flex-col justify-center px-12 py-16 space-y-8">
-            <h2 className="text-3xl font-bold text-foreground">{slide.title}</h2>
-            <div className="space-y-6">
+          <div className="h-full flex flex-col justify-center px-10 py-12 space-y-5">
+            <h2 className="text-xl font-bold text-foreground">{slide.title}</h2>
+            <div className="space-y-4">
               {slide.points?.map((point, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-sm font-mono font-semibold text-primary">{i + 1}</span>
+                <div key={i} className="flex gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-xs font-mono font-semibold text-primary">{i + 1}</span>
                   </div>
-                  <p className="text-base text-foreground leading-relaxed pt-1">{point}</p>
+                  <p className="text-xs text-foreground leading-relaxed pt-0.5">{point}</p>
                 </div>
               ))}
             </div>
@@ -322,51 +322,33 @@ const Index = () => {
         >
           {renderCard(carouselData[currentSlide], currentSlide)}
 
-          <div className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-4 px-8">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={prevSlide}
-              className="rounded-full bg-card/80 backdrop-blur-sm border-2 hover:bg-card"
-            >
-              <Icon name="ChevronLeft" size={20} />
-            </Button>
 
-            <div className="flex gap-2">
-              {carouselData.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentSlide ? 'bg-primary w-8' : 'bg-muted-foreground/30'
-                  }`}
-                  aria-label={`Перейти к слайду ${index + 1}`}
-                />
-              ))}
-            </div>
 
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={nextSlide}
-              className="rounded-full bg-card/80 backdrop-blur-sm border-2 hover:bg-card"
-            >
-              <Icon name="ChevronRight" size={20} />
-            </Button>
-          </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => downloadCard(currentSlide)}
-            className="absolute top-6 right-6 rounded-full hover:bg-primary/10"
-          >
-            <Icon name="Download" size={20} />
-          </Button>
         </Card>
 
-        <div className="text-center mt-6 text-sm text-muted-foreground">
-          Карточка {currentSlide + 1} из {carouselData.length}
+<div className="mt-6 flex flex-wrap gap-3 justify-center">
+          {carouselData.map((_, index) => (
+            <Button
+              key={index}
+              variant={currentSlide === index ? "default" : "outline"}
+              size="sm"
+              onClick={() => setCurrentSlide(index)}
+              className="min-w-[120px]"
+            >
+              Карточка {index + 1}
+            </Button>
+          ))}
+        </div>
+        <div className="mt-4 text-center">
+          <Button
+            variant="outline"
+            onClick={() => downloadCard(currentSlide)}
+            className="gap-2"
+          >
+            <Icon name="Download" size={16} />
+            Скачать карточку {currentSlide + 1}
+          </Button>
         </div>
       </div>
     </div>
