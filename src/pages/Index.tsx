@@ -269,23 +269,28 @@ const Index = () => {
                 </p>
               )}
             </div>
-            <div className="space-y-3">
-              {slide.data?.map((item, i) => (
-                <div key={i} className="space-y-1.5">
-                  <div className="flex justify-between items-baseline">
-                    <span className="text-xs font-medium text-foreground">{item.city}</span>
-                    <span className="text-sm font-mono font-semibold text-primary">
-                      {item.value.toLocaleString('ru-RU')} ₽
+            <div className="flex items-end justify-between gap-2 h-48">
+              {slide.data?.map((item, i) => {
+                const heightPercent = (item.value / maxPrice) * 100;
+                return (
+                  <div key={i} className="flex flex-col items-center flex-1 gap-2">
+                    <div className="w-full flex flex-col justify-end h-full">
+                      <div className="text-center mb-1">
+                        <span className="text-xs font-mono font-semibold text-primary block">
+                          {(item.value / 1000).toFixed(1)}k
+                        </span>
+                      </div>
+                      <div
+                        className="bg-primary rounded-t w-full transition-all duration-500"
+                        style={{ height: `${heightPercent}%` }}
+                      />
+                    </div>
+                    <span className="text-[10px] font-medium text-foreground text-center leading-tight">
+                      {item.city}
                     </span>
                   </div>
-                  <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
-                    <div
-                      className="bg-primary h-full rounded-full transition-all duration-500"
-                      style={{ width: `${(item.value / maxPrice) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         );
