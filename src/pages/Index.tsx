@@ -188,32 +188,70 @@ const Index = () => {
         );
 
       case 'pie-chart':
+        const total = slide.data?.reduce((sum, item) => sum + item.value, 0) || 0;
+        let cumulativePercentage = 0;
+        
         return (
-          <div className="h-full flex flex-col justify-center px-12 py-16 space-y-8">
-            <div>
-              <h2 className="text-3xl font-bold text-foreground mb-2">{slide.title}</h2>
-              <p className="text-sm text-muted-foreground mb-4">{slide.subtitle}</p>
+          <div className="h-full flex flex-col justify-center items-center px-12 py-16 space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-foreground mb-2">{slide.title}</h2>
+              <p className="text-xs text-muted-foreground">{slide.subtitle}</p>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {slide.data?.map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div
-                    className="w-4 h-4 rounded-sm flex-shrink-0"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-baseline gap-2">
-                      <span className="text-sm text-foreground truncate">{item.label}</span>
-                      <span className="text-base font-mono font-semibold text-primary flex-shrink-0">
+            
+            <div className="flex items-center gap-8">
+              <svg width="240" height="240" viewBox="0 0 240 240" className="flex-shrink-0">
+                {slide.data?.map((item, i) => {
+                  const percentage = (item.value / total) * 100;
+                  const startAngle = (cumulativePercentage / 100) * 360 - 90;
+                  const endAngle = ((cumulativePercentage + percentage) / 100) * 360 - 90;
+                  cumulativePercentage += percentage;
+                  
+                  const startX = 120 + 100 * Math.cos((startAngle * Math.PI) / 180);
+                  const startY = 120 + 100 * Math.sin((startAngle * Math.PI) / 180);
+                  const endX = 120 + 100 * Math.cos((endAngle * Math.PI) / 180);
+                  const endY = 120 + 100 * Math.sin((endAngle * Math.PI) / 180);
+                  
+                  const largeArcFlag = percentage > 50 ? 1 : 0;
+                  
+                  const pathData = [
+                    `M 120 120`,
+                    `L ${startX} ${startY}`,
+                    `A 100 100 0 ${largeArcFlag} 1 ${endX} ${endY}`,
+                    `Z`
+                  ].join(' ');
+                  
+                  return (
+                    <path
+                      key={i}
+                      d={pathData}
+                      fill={item.color}
+                      stroke="white"
+                      strokeWidth="2"
+                    />
+                  );
+                })}
+              </svg>
+              
+              <div className="grid grid-cols-1 gap-2 flex-1">
+                {slide.data?.map((item, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <div
+                      className="w-3 h-3 rounded-sm flex-shrink-0"
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <div className="flex-1 flex justify-between items-baseline gap-3">
+                      <span className="text-xs text-foreground">{item.label}</span>
+                      <span className="text-sm font-mono font-semibold text-primary flex-shrink-0">
                         {item.value}%
                       </span>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+            
             {slide.source && (
-              <p className="text-xs text-muted-foreground pt-4 border-t">{slide.source}</p>
+              <p className="text-xs text-muted-foreground text-center">{slide.source}</p>
             )}
           </div>
         );
