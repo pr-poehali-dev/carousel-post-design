@@ -108,12 +108,14 @@ const Index = () => {
 
     const canvas = await html2canvas(element, {
       backgroundColor: '#ffffff',
+      width: 1080,
+      height: 1080,
       scale: 2,
       logging: false
     });
 
     const link = document.createElement('a');
-    link.download = `tourism-card-${index + 1}.png`;
+    link.download = `instagram-card-${index + 1}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
   };
@@ -323,11 +325,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 md:p-8">
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-[540px]">
         <Card
           ref={(el) => (cardRefs.current[currentSlide] = el)}
           className="relative bg-gradient-to-br from-card to-card/95 shadow-2xl overflow-hidden border-2"
-          style={{ aspectRatio: '1 / 1', maxHeight: '90vh' }}
+          style={{ width: '540px', height: '540px' }}
         >
           {renderCard(carouselData[currentSlide], currentSlide)}
 
