@@ -259,17 +259,12 @@ const Index = () => {
       case 'bar-chart-horizontal':
         const maxPrice = Math.max(...(slide.data?.map((d) => d.value) || [0]));
         return (
-          <div className="h-full flex flex-col justify-center px-10 py-12 space-y-5">
+          <div className="h-full flex flex-col justify-center px-10 py-12 space-y-4">
             <div>
               <h2 className="text-xl font-bold text-foreground mb-1">{slide.title}</h2>
               <p className="text-xs text-muted-foreground mb-3">{slide.subtitle}</p>
-              {slide.note && (
-                <p className="text-xs text-foreground bg-primary/5 px-3 py-2 rounded border-l-2 border-primary">
-                  {slide.note}
-                </p>
-              )}
             </div>
-            <div className="flex items-end justify-between gap-2 h-48">
+            <div className="flex items-end justify-between gap-2 h-44">
               {slide.data?.map((item, i) => {
                 const heightPercent = (item.value / maxPrice) * 100;
                 return (
@@ -292,6 +287,11 @@ const Index = () => {
                 );
               })}
             </div>
+            {slide.note && (
+              <p className="text-xs text-foreground bg-primary/5 px-3 py-2 rounded border-l-2 border-primary leading-relaxed">
+                {slide.note}
+              </p>
+            )}
           </div>
         );
 
