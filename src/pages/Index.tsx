@@ -264,33 +264,37 @@ const Index = () => {
               <h2 className="text-xl font-bold text-foreground mb-1">{slide.title}</h2>
               <p className="text-xs text-muted-foreground mb-3">{slide.subtitle}</p>
             </div>
-            <div className="flex items-end justify-between gap-2 h-44">
-              {slide.data?.map((item, i) => {
-                const heightPercent = (item.value / maxPrice) * 100;
-                return (
-                  <div key={i} className="flex flex-col items-center flex-1 gap-2">
-                    <div className="w-full flex flex-col justify-end h-full">
-                      <div className="text-center mb-1">
-                        <span className="text-xs font-mono font-semibold text-primary block">
-                          {(item.value / 1000).toFixed(1)}k
-                        </span>
+            <div className="relative">
+              <div className="flex items-end justify-between gap-3 h-52 border-b-2 border-secondary pb-2">
+                {slide.data?.map((item, i) => {
+                  const heightPercent = (item.value / maxPrice) * 100;
+                  return (
+                    <div key={i} className="flex flex-col items-center flex-1 gap-2 h-full">
+                      <div className="w-full flex flex-col justify-end h-full">
+                        <div className="text-center mb-1">
+                          <span className="text-xs font-mono font-semibold text-foreground block">
+                            {item.value.toLocaleString('ru-RU')}
+                          </span>
+                        </div>
+                        <div
+                          className="bg-gradient-to-t from-primary to-primary/80 rounded-t-lg w-full transition-all duration-700 shadow-lg"
+                          style={{ height: `${heightPercent}%`, minHeight: '20px' }}
+                        />
                       </div>
-                      <div
-                        className="bg-primary rounded-t w-full transition-all duration-500"
-                        style={{ height: `${heightPercent}%` }}
-                      />
+                      <span className="text-[10px] font-medium text-muted-foreground text-center leading-tight mt-1">
+                        {item.city}
+                      </span>
                     </div>
-                    <span className="text-[10px] font-medium text-foreground text-center leading-tight">
-                      {item.city}
-                    </span>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
             {slide.note && (
-              <p className="text-xs text-foreground bg-primary/5 px-3 py-2 rounded border-l-2 border-primary leading-relaxed">
-                {slide.note}
-              </p>
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 px-4 py-3 rounded-lg border-l-4 border-primary">
+                <p className="text-xs text-foreground leading-relaxed">
+                  {slide.note}
+                </p>
+              </div>
             )}
           </div>
         );
@@ -322,7 +326,7 @@ const Index = () => {
       <div className="w-full max-w-4xl">
         <Card
           ref={(el) => (cardRefs.current[currentSlide] = el)}
-          className="relative bg-card shadow-2xl overflow-hidden"
+          className="relative bg-gradient-to-br from-card to-card/95 shadow-2xl overflow-hidden border-2"
           style={{ aspectRatio: '1 / 1', maxHeight: '90vh' }}
         >
           {renderCard(carouselData[currentSlide], currentSlide)}
